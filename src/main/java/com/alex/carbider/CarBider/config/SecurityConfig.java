@@ -20,7 +20,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers( "/login", "/").permitAll()
+                        .requestMatchers( "/login", "/", "/register").permitAll()
                         .anyRequest().authenticated()
                 )
                 //För att vi ska behöva logga in
