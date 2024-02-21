@@ -7,5 +7,14 @@
 <body>
 <h1>Detta är home page</h1>
 
+<div th:each="cars : ${cars}">
+    <h1>
+        <a th:href="@{/viewCar/{id}(id=${cars.id})}" th:text="*{cars.title}"></a>
+    </h1>
+    <p th:text="*{cars.description}"></p>
+    <p th:text="*{cars.startingBid}"></p>
+    <p th:text="*{cars.buyOutPrice}"></p>
+</div>
+
 </body>
 </html>
