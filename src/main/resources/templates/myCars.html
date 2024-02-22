@@ -11,6 +11,10 @@
     <p th:text="*{myCars.description}"></p>
     <p th:text="*{myCars.startingBid}"></p>
     <p th:text="*{myCars.buyOutPrice}"></p>
+    <p th:text="*{myCars.email}"></p>
+
+    <a th:href="@{/editMyCar(carId=${myCars.id})}">Edit</a>
+
 </div>
 </body>
 </html>
