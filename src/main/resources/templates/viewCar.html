@@ -10,6 +10,11 @@
     <p th:text="*{description}"></p>
     <p th:text="*{startingBid}"></p>
     <p th:text="*{buyOutPrice}"></p>
+    <p th:text="*{email}"></p>
+
+
+    <a th:href="'mailto:' + *{email}">Contact Seller!</a>
+
 </div>
 </body>
 </html>

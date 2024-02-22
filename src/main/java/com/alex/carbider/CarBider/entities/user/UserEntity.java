@@ -21,7 +21,6 @@ public class UserEntity implements UserDetails {
 
     private String username;
     private String password;
-    private String email;
     private GrantedAuthority authority;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -34,14 +33,13 @@ public class UserEntity implements UserDetails {
 
 
 
-    public UserEntity(String username, String email, List<CarEntity> carsList, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
+    public UserEntity(String username, List<CarEntity> carsList, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.accountEnabled = accountEnabled;
         this.credentialsNonExpired = credentialsNonExpired;
-        this.email = email;
         this.carsList = carsList;
     }
 
@@ -51,14 +49,6 @@ public class UserEntity implements UserDetails {
 
     public void setCarsList(List<CarEntity> carsList) {
         this.carsList = carsList;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     @Override

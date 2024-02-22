@@ -15,20 +15,31 @@ public class CarEntity {
     private int startingBid;
     private int buyOutPrice;
 
-    @ManyToOne()
+    private String email;
+
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "users_id")
     private UserEntity user;
 
-    public CarEntity(long id, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
+    public CarEntity(long id, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
         this.id = id;
         this.title = title;
         this.description = desc;
         this.startingBid = startingBid;
         this.buyOutPrice = buyOutPrice;
         this.user = user;
+        this.email = email;
     }
 
     public CarEntity() {
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public UserEntity getUser() {

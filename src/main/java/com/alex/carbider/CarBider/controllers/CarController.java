@@ -74,7 +74,7 @@ public class CarController {
         return "viewCar";
     }
 
-    @GetMapping("/myAds")
+    @GetMapping("/myCars")
     public String showMyCars(CarEntity carEntity, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -84,6 +84,6 @@ public class CarController {
 
         model.addAttribute("userCars", userCars);
 
-        return "myAds";
+        return "myCars";
     }
 }

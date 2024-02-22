@@ -8,6 +8,9 @@
 <h1>My Cars Page</h1>
 <div th:each="myCars : ${userCars}">
     <h1 th:text="*{myCars.title}"></h1>
+    <p th:text="*{myCars.description}"></p>
+    <p th:text="*{myCars.startingBid}"></p>
+    <p th:text="*{myCars.buyOutPrice}"></p>
 </div>
 </body>
 </html>
