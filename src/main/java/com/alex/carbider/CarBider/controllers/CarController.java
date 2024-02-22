@@ -1,10 +1,14 @@
 package com.alex.carbider.CarBider.controllers;
 
+import com.alex.carbider.CarBider.entities.user.UserEntity;
+import com.alex.carbider.CarBider.entities.user.UserRepository;
 import com.alex.carbider.CarBider.entities.user.cars.CarEntity;
 import com.alex.carbider.CarBider.entities.user.cars.CarEntityDetailsService;
 import com.alex.carbider.CarBider.entities.user.cars.CarRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,13 +22,15 @@ import java.util.List;
 public class CarController {
 
     private final CarRepository carRepository;
+    private final UserRepository userRepository;
 
     @Autowired
     private CarEntityDetailsService carService;
 
     @Autowired
-    public CarController(CarRepository carRepository) {
+    public CarController(CarRepository carRepository, UserRepository userRepository) {
         this.carRepository = carRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/createAd")
@@ -68,4 +74,16 @@ public class CarController {
         return "viewCar";
     }
 
+    @GetMapping("/myAds")
+    public String showMyCars(CarEntity carEntity, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        UserEntity currentUser = userRepository.findUserByUsername(username);
+        List<CarEntity> userCars = currentUser.getCarsList();
+
+
+        model.addAttribute("userCars", userCars);
+
+        return "myAds";
+    }
 }

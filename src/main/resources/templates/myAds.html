@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cars Page!</title>
+</head>
+<body>
+<h1>My Cars Page</h1>
+<div th:each="myCars : ${userCars}">
+    <h1 th:text="*{myCars.title}"></h1>
+</div>
+</body>
+</html>
