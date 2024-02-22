@@ -136,4 +136,31 @@ public class CarController {
         return "redirect:/myCars";
     }
 
+    @PostMapping("/place-bet")
+    public String placeBetOnCar(
+            @RequestParam("carId") Long carId,
+            @RequestParam("startingBid") int startingBid)
+
+
+    {
+
+        CarEntity car = carRepository.findById(carId).orElse(null);
+        if (car == null) {
+            return "error-page";
+        }
+
+        car.setStartingBid(startingBid);
+        carRepository.save(car);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/deleteCar/{id}")
+    public String deleteCar(
+            @PathVariable Long id
+    ) {
+        carRepository.deleteById(id);
+        return "redirect:/myCars";
+    }
+
 }

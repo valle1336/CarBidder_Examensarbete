@@ -17,7 +17,7 @@ public class CarEntity {
 
     private String email;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne()
     @JoinColumn(name = "users_id")
     private UserEntity user;
 
