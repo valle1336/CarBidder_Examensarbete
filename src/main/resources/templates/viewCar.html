@@ -21,11 +21,11 @@
         <input type="hidden" th:name="carId" th:value="*{id}">
 
         <label for="currentBid">Current bid:</label>
-        <p th:text="*{startingBid}" id="currentBid"></p>
+        <p th:text="*{currentBid}" id="currentBid"></p>
 
         <label for="price">Place bet!</label>
         <br>
-        <input type="text" id="price" th:name="startingBid" placeholder="place bet...">
+        <input type="text" id="price" th:name="currentBid" placeholder="place bet...">
         <br>
 
         <button type="submit">Place bet!</button>

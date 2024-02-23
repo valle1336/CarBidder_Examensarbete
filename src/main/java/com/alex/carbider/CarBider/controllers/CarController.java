@@ -139,7 +139,7 @@ public class CarController {
     @PostMapping("/place-bet")
     public String placeBetOnCar(
             @RequestParam("carId") Long carId,
-            @RequestParam("startingBid") int startingBid)
+            @RequestParam("currentBid") int currentBid)
 
 
     {
@@ -149,7 +149,7 @@ public class CarController {
             return "error-page";
         }
 
-        car.setStartingBid(startingBid);
+        car.setCurrentBid(currentBid);
         carRepository.save(car);
 
         return "redirect:/";
