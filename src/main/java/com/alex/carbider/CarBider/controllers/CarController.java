@@ -160,7 +160,7 @@ public class CarController {
         int buyOutPriceOnCar = car.getBuyOutPrice();
 
         if (userPoints > currentCarBid) {
-            user.setPoints(userPoints - currentCarBid);
+            user.setPoints(userPoints - currentBid);
             car.setCurrentBid(currentBid);
             carRepository.save(car);
         } else {
@@ -168,7 +168,7 @@ public class CarController {
         }
 
         if(userPoints < buyOutPriceOnCar) {
-            return "error-page";
+            return "notEnoughBalance";
         } else {
             user.setPoints(buyOutPriceOnCar);
         }
