@@ -21,6 +21,7 @@ public class UserEntity implements UserDetails {
 
     private String username;
     private String password;
+    private int points;
     private GrantedAuthority authority;
     private boolean accountNonExpired;
     private boolean accountNonLocked;
@@ -33,7 +34,7 @@ public class UserEntity implements UserDetails {
 
 
 
-    public UserEntity(String username, List<CarEntity> carsList, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
+    public UserEntity(String username, List<CarEntity> carsList, int points, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
@@ -41,6 +42,15 @@ public class UserEntity implements UserDetails {
         this.accountEnabled = accountEnabled;
         this.credentialsNonExpired = credentialsNonExpired;
         this.carsList = carsList;
+        this.points = points;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
     }
 
     public List<CarEntity> getCarsList() {
