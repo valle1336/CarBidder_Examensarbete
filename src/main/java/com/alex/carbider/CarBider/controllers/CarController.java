@@ -88,6 +88,17 @@ public class CarController {
         return "viewCar";
     }
 
+    @GetMapping("/myProfile/{id}")
+    public String getUserByIdOnMyProfilePage(@PathVariable("id") Long id, Model model) {
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userEntity", user);
+        return "myProfile";
+    }
+
     @GetMapping("/myCars")
     public String showMyCars(CarEntity carEntity, Model model) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

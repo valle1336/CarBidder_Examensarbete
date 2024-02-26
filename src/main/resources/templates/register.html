@@ -5,7 +5,12 @@
     <title>Register Account</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bider</a>
+    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+</div>
+
 <h1>Register Account!</h1>
 
 <form method="post" th:action="@{/register}" th:object="${userEntity}">
