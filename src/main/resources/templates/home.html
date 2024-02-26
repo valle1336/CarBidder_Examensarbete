@@ -3,19 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <title>Home Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-<h1>Detta är home page</h1>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+<h1 class="font-bold text-4xl">Car Bider</h1>
+</div>
 
-<div th:each="cars : ${cars}">
-    <h1>
+<div th:each="cars : ${cars}" class="flex justify-center mt-4">
+    <div class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6">
+
+    <h1 id="title" class="font-bold text-2xl pb-2">
         <a th:href="@{/viewCar/{id}(id=${cars.id})}" th:text="*{cars.title}"></a>
     </h1>
-    <p th:text="*{cars.description}"></p>
-    <p th:text="*{cars.startingBid}"></p>
-    <p th:text="*{cars.currentBid}"></p>
-    <p th:text="*{cars.buyOutPrice}"></p>
+
+    <p th:text="*{cars.description}" id="desc" class="text-"></p>
+
+    <label for="current" class="pt-2">Current Bid:</label>
+    <p th:text="*{'$' + cars.currentBid}" id="current"></p>
+
+    <label for="buyOut" class="pt-2">Buy out price:</label>
+    <p th:text="*{'$' + cars.buyOutPrice}" id="buyOut"></p>
+
+    </div>
 </div>
+
+
+
+<div th:if="${#authentication.principal != null}">
+    <div th:object="${userEntity}" class="flex justify-center">
+    <div class="flex flex-col">
+        <img src="../static/images/user.png" alt="This image could not be loaded :(" width="40px" height="40px">
+    <p th:text="*{username}"></p>
+    <p th:text="*{'$' + points}"></p>
+    </div>
+    </div>
+</div>
+
 
 </body>
 </html>
