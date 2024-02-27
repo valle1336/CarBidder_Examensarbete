@@ -163,7 +163,7 @@ public class CarController {
     @PostMapping("/place-bet")
     public String placeBetOnCar(
             @RequestParam("carId") Long carId,
-            @RequestParam("currentBid") int currentBid,
+            @RequestParam("currentBid") int userBetOnCar,
             Authentication authentication) {
 
         // Hämta CarEntity
@@ -182,16 +182,13 @@ public class CarController {
         int currentCarBid = car.getCurrentBid();
         int buyOutPriceOnCar = car.getBuyOutPrice();
 
-        if(userPoints < currentBid) {
+        if(userPoints < userBetOnCar || userBetOnCar < currentCarBid) {
             return "notEnoughBalance";
         } else if (userPoints > currentCarBid) {
-            user.setPoints(userPoints - currentBid);
-            car.setCurrentBid(currentBid);
+            user.setPoints(userPoints - userBetOnCar);
+            car.setCurrentBid(userBetOnCar);
             carRepository.save(car);
-        } else {
-            return "notEnoughBalance";
         }
-
 
 
 
