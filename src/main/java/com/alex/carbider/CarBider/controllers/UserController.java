@@ -1,6 +1,7 @@
 package com.alex.carbider.CarBider.controllers;
 
 import com.alex.carbider.CarBider.config.PasswordConfig;
+import com.alex.carbider.CarBider.entities.user.Roles;
 import com.alex.carbider.CarBider.entities.user.UserEntity;
 import com.alex.carbider.CarBider.entities.user.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,10 @@ public class UserController {
     }
 
     @GetMapping("/register")
-    public String showUser(Model model) {
-        model.addAttribute("userEntity", new UserEntity());
+    public String registerUserPage(UserEntity userEntity, Model model) {
+
+        model.addAttribute("roles", Roles.values());
+
         return "register";
     }
 

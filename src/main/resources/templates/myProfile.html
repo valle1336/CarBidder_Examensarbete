@@ -16,8 +16,8 @@
         <img src="../static/images/user.png" alt="This image could not be loaded :(" width="45px" height="45px">
 
         <h1 th:text="*{username}" class="font-bold text-xl"></h1>
+            <p class="pt-2" th:text="*{role.name()}"></p>
         <p th:text="*{'$' + points}"></p>
-        <p class="pt-2">Authority (Coming soon)</p>
             <label for="nonExpired" class="pt-2">Account Non Expired:</label>
         <p th:text="*{accountNonExpired}" id="nonExpired"></p>
 

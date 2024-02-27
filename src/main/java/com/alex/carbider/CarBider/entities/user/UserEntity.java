@@ -2,6 +2,7 @@ package com.alex.carbider.CarBider.entities.user;
 
 import com.alex.carbider.CarBider.entities.user.cars.CarEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -19,7 +20,9 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CarEntity> carsList;
 
+    @Size(min = 1, max = 64, message = "Username cannot be empty or more than 64 characters!")
     private String username;
+    @Size(min = 4, max = 64, message = "Password cannot be weaker than 4 or more than 64 characters!")
     private String password;
     private int points;
     private GrantedAuthority authority;
@@ -28,13 +31,16 @@ public class UserEntity implements UserDetails {
     private boolean accountEnabled;
     private boolean credentialsNonExpired;
 
+    @Enumerated(EnumType.STRING)
+    private Roles role;
+
 
 
     public UserEntity() {}
 
 
 
-    public UserEntity(String username, List<CarEntity> carsList, int points, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
+    public UserEntity(String username, Roles roles, List<CarEntity> carsList, int points, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
@@ -43,6 +49,17 @@ public class UserEntity implements UserDetails {
         this.credentialsNonExpired = credentialsNonExpired;
         this.carsList = carsList;
         this.points = points;
+        this.role = roles;
+    }
+
+
+
+    public Roles getRole() {
+        return role;
+    }
+
+    public void setRole(Roles role) {
+        this.role = role;
     }
 
     public int getPoints() {

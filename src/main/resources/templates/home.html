@@ -25,6 +25,10 @@
     <p th:text="*{'$' + cars.buyOutPrice}" id="buyOut"></p>
 
     </a>
+    <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <a th:href="@{/editMyCar(carId=${myCars.id})}">Edit</a>
+        <a th:href="@{/deleteCar/{id}(id=${myCars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
+    </p>
 </div>
 <div class="flex flex-row justify-center mt-8 ">
 <a th:href="@{/createAd}" class="bg-green-500 font-bold text-4xl px-4 pb-2 rounded-full mb-10">+</a>
