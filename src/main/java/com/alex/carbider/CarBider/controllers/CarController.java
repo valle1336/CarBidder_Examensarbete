@@ -64,7 +64,7 @@ public class CarController {
 
         UserEntity user = userRepository.findByUsername(authentication.getName());
         if (user == null) {
-            return "error-page";
+            return "home";
         }
         model.addAttribute("userEntity", user);
 
@@ -182,13 +182,16 @@ public class CarController {
         int currentCarBid = car.getCurrentBid();
         int buyOutPriceOnCar = car.getBuyOutPrice();
 
-        if (userPoints > currentCarBid) {
+        if(userPoints < currentBid) {
+            return "notEnoughBalance";
+        } else if (userPoints > currentCarBid) {
             user.setPoints(userPoints - currentBid);
             car.setCurrentBid(currentBid);
             carRepository.save(car);
         } else {
             return "notEnoughBalance";
         }
+
 
 
 
