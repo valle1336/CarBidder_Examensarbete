@@ -7,7 +7,7 @@
 </head>
 <body class="bg-sky-200">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bider</a>
+    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
     <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
     <div th:object="${userEntity}" class="flex justify-center">
@@ -27,8 +27,11 @@
             <label for="creNonExpired" class="pt-2">Credentials Non Expired:</label>
         <p th:text="*{credentialsNonExpired}" id="creNonExpired"></p>
         </div>
-
     </div>
+<div class="flex justify-center pt-6">
+    <a th:href="@{/logout}" class="bg-red-500 px-4 py-2 rounded-lg border-2 border-slate-400 mr-4">Sign out!</a>
+    <a th:href="@{/myCars}" class="bg-blue-400 px-4 py-2 rounded-lg border-2 border-slate-400">My Cars!</a>
+</div>
 
 
 </body>

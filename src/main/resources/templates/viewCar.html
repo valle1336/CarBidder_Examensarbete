@@ -7,44 +7,39 @@
 </head>
 <body class="bg-sky-200">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bider</a>
+    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
     <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
-<div th:object="${carEntity}">
-    
-    <label for="title">Title:</label>
-    <h1 th:text="*{title}" id="title"></h1>
+<div th:object="${carEntity}" class="flex flex-col items-center">
 
-    <label for="desc">Description:</label>
-    <p th:text="*{description}" id="desc"></p>
+    <div class="bg-slate-200 w-2/4 flex items-center flex-col border-2 border-slate-500 rounded-lg py-6">
 
+    <h1 th:text="*{title}" id="title" class="text-2xl font-bold"></h1>
+
+
+    <p th:text="*{description}" id="desc" class="pb-4"></p>
+
+        <div th:if="*{bought}">
+            <h1 class="font-bold text-4xl text-red-600">SOLD!</h1>
+        </div>
+
+        <div th:unless="*{bought}" class="flex flex-col items-center">
     <label for="bid">Starting bid:</label>
-    <p th:text="*{'$' + startingBid}" id="bid"></p>
+    <p th:text="*{'$' + startingBid}" id="bid" class="pb-2"></p>
 
     <label for="buyOut">Buy out price:</label>
-    <p th:text="*{'$' + buyOutPrice}" id="buyOut"></p>
-
-    <label for="email">Email:</label>
-    <p th:text="*{email}" id="email"></p>
+    <p th:text="*{'$' + buyOutPrice}" id="buyOut" class="pb-2"></p>
 
 
-    <a th:href="'mailto:' + *{email}">Contact Seller!</a>
-    <br>
-
-
-    <form th:action="@{/place-bet}" method="post">
+    <form th:action="@{/place-bet}" method="post" class="flex items-center flex-col">
         <input type="hidden" th:name="carId" th:value="*{id}">
-
         <label for="currentBid">Current bid:</label>
-        <p th:text="*{'$' + currentBid}" id="currentBid"></p>
+        <p th:text="*{'$' + currentBid}" id="currentBid" class="pb-4"></p>
 
-        <label for="price">Place bet!</label>
-        <br>
-        <input type="text" id="price" th:name="currentBid" placeholder="place bet...">
-        <br>
+        <input type="text" id="price" th:name="currentBid" placeholder="place bet..." class="mb-2 rounded-lg px-2">
 
-        <button type="submit">Place bet!</button>
+        <button type="submit" class="bg-green-400 px-2 rounded-md py-2">Place bet!</button>
         <br>
     </form>
 
@@ -52,15 +47,18 @@
         <input type="hidden" th:name="carId" th:value="*{id}">
 
         <label for="buy">Buy out price:</label>
-        <p th:text="*{'$' + buyOutPrice}" id="buy"></p>
+        <p th:text="*{'$' + buyOutPrice}" id="buy" class="mb-2"></p>
 
-        <button type="submit">Buy out car!</button>
+        <button type="submit" class="bg-blue-400 px-2 rounded-md py-2 mb-6">Buy out car!</button>
 
     </form>
 
-    <div th:object="${userEntity}">
+    <div th:object="${userEntity}" class="flex flex-col items-center">
+        <img src="../static/images/user.png" alt="This image could not be loaded :(" width="45px" height="45px">
         <label for="points">User credits:</label>
         <p th:text="*{'$' + points}" id="points"></p>
+    </div>
+    </div>
     </div>
 
 </div>
