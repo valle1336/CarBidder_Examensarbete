@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Winnings</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
+    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+</div>
+<div class="flex flex-col items-center">
+<h1 class="font-bold text-2xl mb-6">🎉Congratulations! Here are your winnings :)🎉</h1>
+
+<div th:each="myCars : ${userCars}" class="bg-slate-200 px-4 py-4 rounded-lg border-2 border-black mt-6">
+
+    <h1 th:text="*{myCars.title}" class="font-bold text-xl"></h1>
+    <p th:text="*{myCars.description}"></p>
+    <p th:text="*{myCars.email}" class="mb-6"></p>
+    <a th:href="'mailto:' + *{myCars.email}" class="bg-lime-500 px-4 py-2 rounded-lg border-2 border-slate-400">Contact seller!</a>
+    
+
+</div>
+</div>
+</body>
+</html>
