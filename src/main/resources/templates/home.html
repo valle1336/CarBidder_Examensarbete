@@ -11,17 +11,20 @@
     <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
-<div th:each="cars : ${cars}" class="flex justify-center mt-4">
+<div th:each="cars : ${cars}" class="flex flex-col items-center mt-4">
+
     <a class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6" th:href="@{/viewCar/{id}(id=${cars.id})}">
+
+
 
         <img alt="Car image could not load :(">
 
 
         <h1 id="title" class="font-bold text-2xl pb-2" th:text="*{cars.title}"></h1>
 
-    <p th:text="*{cars.description}" id="desc" class="text-"></p>
+    <p th:text="*{cars.description}" id="desc"></p>
 
-<div th:unless="${cars.bought}" class="flex flex-col items-center">
+<div th:unless="${cars.bought}">
     <label for="current" class="pt-2">Current Bid:</label>
     <p th:text="*{'$' + cars.currentBid}" id="current"></p>
 
@@ -31,13 +34,14 @@
         <div th:if="${cars.bought}">
             <h1 class="font-bold text-3xl text-red-600">SOLD!</h1>
         </div>
+    </a>
 
-        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="mt-2">
             <a th:href="@{/editMyCar(carId=${cars.id})}">Edit</a>
             <a th:href="@{/deleteCar/{id}(id=${cars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
         </div>
 
-    </a>
+
 
 
 </div>

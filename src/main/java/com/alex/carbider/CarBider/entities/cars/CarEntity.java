@@ -18,7 +18,7 @@ public class CarEntity {
     private boolean bought;
 
     @Lob
-    private byte[] data;
+    private byte[] image;
     private String email;
 
     @ManyToOne()
@@ -40,19 +40,19 @@ public class CarEntity {
         this.email = email;
         this.currentBid = currentBid;
         this.bought = bought;
-        this.data = data;
+        this.image = data;
     }
 
     public CarEntity() {
     }
 
 
-    public byte[] getData() {
-        return data;
+    public byte[] getImage() {
+        return image;
     }
 
-    public void setData(byte[] data) {
-        this.data = data;
+    public void setImage(byte[] image) {
+        this.image = image;
     }
 
     public UserEntity getUser_winnings() {

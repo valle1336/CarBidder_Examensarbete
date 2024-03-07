@@ -7,8 +7,6 @@ import com.alex.carbider.CarBider.entities.cars.CarEntityDetailsService;
 import com.alex.carbider.CarBider.entities.cars.CarRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CarController {
@@ -63,7 +60,7 @@ public class CarController {
         if (imageFile != null && !imageFile.isEmpty()) {
             try {
                 byte[] imageData = imageFile.getBytes();
-                carEntity.setData(imageData);
+                carEntity.setImage(imageData);
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -228,7 +225,7 @@ public class CarController {
         car.setBuyOutPrice(buyOutPrice);
         carRepository.save(car);
 
-        return "redirect:/myCars";
+        return "redirect:/";
     }
 
     @PostMapping("/place-bet")
