@@ -1,4 +1,4 @@
-package com.alex.carbider.CarBider.entities.user.cars;
+package com.alex.carbider.CarBider.entities.cars;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

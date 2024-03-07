@@ -1,6 +1,6 @@
 package com.alex.carbider.CarBider.entities.user;
 
-import com.alex.carbider.CarBider.entities.user.cars.CarEntity;
+import com.alex.carbider.CarBider.entities.cars.CarEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;

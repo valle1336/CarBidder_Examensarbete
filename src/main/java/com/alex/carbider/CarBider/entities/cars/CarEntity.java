@@ -1,5 +1,6 @@
-package com.alex.carbider.CarBider.entities.user.cars;
+package com.alex.carbider.CarBider.entities.cars;
 
+import com.alex.carbider.CarBider.entities.images.ImageEntity;
 import com.alex.carbider.CarBider.entities.user.UserEntity;
 import jakarta.persistence.*;
 
@@ -16,6 +17,7 @@ public class CarEntity {
     private int currentBid;
     private int buyOutPrice;
     private boolean bought;
+
 
     private String email;
 
@@ -42,6 +44,7 @@ public class CarEntity {
 
     public CarEntity() {
     }
+
 
     public UserEntity getUser_winnings() {
         return user_winnings;

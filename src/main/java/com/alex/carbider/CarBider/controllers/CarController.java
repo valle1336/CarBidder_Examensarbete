@@ -1,20 +1,27 @@
 package com.alex.carbider.CarBider.controllers;
 
+import com.alex.carbider.CarBider.entities.images.ImageEntity;
+import com.alex.carbider.CarBider.entities.images.ImageRepository;
 import com.alex.carbider.CarBider.entities.user.UserEntity;
 import com.alex.carbider.CarBider.entities.user.UserRepository;
-import com.alex.carbider.CarBider.entities.user.cars.CarEntity;
-import com.alex.carbider.CarBider.entities.user.cars.CarEntityDetailsService;
-import com.alex.carbider.CarBider.entities.user.cars.CarRepository;
+import com.alex.carbider.CarBider.entities.cars.CarEntity;
+import com.alex.carbider.CarBider.entities.cars.CarEntityDetailsService;
+import com.alex.carbider.CarBider.entities.cars.CarRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CarController {
@@ -22,21 +29,53 @@ public class CarController {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
 
+    private final ImageRepository imageRepository;
+
     @Autowired
     private CarEntityDetailsService carService;
 
     @Autowired
-    public CarController(CarRepository carRepository, UserRepository userRepository) {
+    public CarController(CarRepository carRepository, UserRepository userRepository, ImageRepository imageRepository) {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
+        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/createAd")
-    public String createAdPage(CarEntity carEntity, Model model) {
+    public String createAdPage(CarEntity carEntity, Model model, ImageEntity image) {
         model.addAttribute("carEntity", carEntity);
+        model.addAttribute("image", image);
 
         return "createAd";
 
+    }
+
+    @PostMapping("/upload")
+    public String uploadImage(@RequestParam("file") MultipartFile file) {
+        try {
+            ImageEntity imageEntity = new ImageEntity();
+            imageEntity.setData(file.getBytes());
+            imageRepository.save(imageEntity);
+            // Återvänd eller omdirigera till önskad vy
+            return "redirect:/success";
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Hantera fel
+            return "redirect:/error-page";
+        }
+    }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        Optional<ImageEntity> optionalImage = imageRepository.findById(id);
+
+        if (optionalImage.isPresent()) {
+            ImageEntity imageEntity = optionalImage.get();
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageEntity.getData());
+        } else {
+            // Hantera om bilden inte finns
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/createAd")

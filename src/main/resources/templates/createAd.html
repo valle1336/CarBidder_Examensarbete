@@ -29,10 +29,28 @@
    <label for="email">Email</label>
    <input type="email" placeholder="email..." id="email" th:field="*{email}">
 
+
+
     <button type="submit">Post Ad!</button>
 
 </form>
 </form>
+
+<form th:action="@{/upload}" th:object="${image}" method="post" enctype="multipart/form-data">
+    <label for="image">Image</label>
+    <input type="file" placeholder="image..." id="image" th:field="*{data}" accept="image/*">
+
+    <button type="submit">Post Image</button>
+</form>
+
+
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <label for="file">Choose Image:</label>
+    <input type="file" name="file" id="file" accept="image/*" required>
+    <br>
+    <button type="submit">Upload</button>
+</form>
+
 
 </body>
 </html>
