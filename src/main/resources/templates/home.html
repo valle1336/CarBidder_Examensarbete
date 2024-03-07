@@ -14,7 +14,10 @@
 <div th:each="cars : ${cars}" class="flex justify-center mt-4">
     <a class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6" th:href="@{/viewCar/{id}(id=${cars.id})}">
 
-    <h1 id="title" class="font-bold text-2xl pb-2" th:text="*{cars.title}"></h1>
+        <img alt="Car image could not load :(">
+
+
+        <h1 id="title" class="font-bold text-2xl pb-2" th:text="*{cars.title}"></h1>
 
     <p th:text="*{cars.description}" id="desc" class="text-"></p>
 

@@ -1,7 +1,5 @@
 package com.alex.carbider.CarBider.controllers;
 
-import com.alex.carbider.CarBider.entities.images.ImageEntity;
-import com.alex.carbider.CarBider.entities.images.ImageRepository;
 import com.alex.carbider.CarBider.entities.user.UserEntity;
 import com.alex.carbider.CarBider.entities.user.UserRepository;
 import com.alex.carbider.CarBider.entities.cars.CarEntity;
@@ -29,62 +27,46 @@ public class CarController {
     private final CarRepository carRepository;
     private final UserRepository userRepository;
 
-    private final ImageRepository imageRepository;
 
     @Autowired
     private CarEntityDetailsService carService;
 
     @Autowired
-    public CarController(CarRepository carRepository, UserRepository userRepository, ImageRepository imageRepository) {
+    public CarController(CarRepository carRepository, UserRepository userRepository) {
         this.carRepository = carRepository;
         this.userRepository = userRepository;
-        this.imageRepository = imageRepository;
     }
 
     @GetMapping("/createAd")
-    public String createAdPage(CarEntity carEntity, Model model, ImageEntity image) {
+    public String createAdPage(CarEntity carEntity, Model model) {
         model.addAttribute("carEntity", carEntity);
-        model.addAttribute("image", image);
+        model.addAttribute("image");
 
         return "createAd";
 
     }
 
-    @PostMapping("/upload")
-    public String uploadImage(@RequestParam("file") MultipartFile file) {
-        try {
-            ImageEntity imageEntity = new ImageEntity();
-            imageEntity.setData(file.getBytes());
-            imageRepository.save(imageEntity);
-            // Återvänd eller omdirigera till önskad vy
-            return "redirect:/success";
-        } catch (IOException e) {
-            e.printStackTrace();
-            // Hantera fel
-            return "redirect:/error-page";
-        }
-    }
 
-    @GetMapping("/image/{id}")
-    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
-        Optional<ImageEntity> optionalImage = imageRepository.findById(id);
 
-        if (optionalImage.isPresent()) {
-            ImageEntity imageEntity = optionalImage.get();
-            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(imageEntity.getData());
-        } else {
-            // Hantera om bilden inte finns
-            return ResponseEntity.notFound().build();
-        }
-    }
+
 
     @PostMapping("/createAd")
     public String createAd(
             @Valid CarEntity carEntity,
-            BindingResult result
+            BindingResult result,
+            @RequestParam("imageFile") MultipartFile imageFile
     ) {
         if(result.hasErrors()) {
             return "createAd";
+        }
+
+        if (imageFile != null && !imageFile.isEmpty()) {
+            try {
+                byte[] imageData = imageFile.getBytes();
+                carEntity.setData(imageData);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
 
         Authentication authentication = SecurityContextHolder .getContext().getAuthentication ();

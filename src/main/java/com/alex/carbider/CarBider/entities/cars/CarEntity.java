@@ -1,6 +1,5 @@
 package com.alex.carbider.CarBider.entities.cars;
 
-import com.alex.carbider.CarBider.entities.images.ImageEntity;
 import com.alex.carbider.CarBider.entities.user.UserEntity;
 import jakarta.persistence.*;
 
@@ -18,7 +17,8 @@ public class CarEntity {
     private int buyOutPrice;
     private boolean bought;
 
-
+    @Lob
+    private byte[] data;
     private String email;
 
     @ManyToOne()
@@ -29,7 +29,7 @@ public class CarEntity {
     @JoinColumn(name = "users_id_winnings")
     private UserEntity user_winnings;
 
-    public CarEntity(long id, boolean bought, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user, UserEntity user_winnings) {
+    public CarEntity(long id, byte[] data, boolean bought, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user, UserEntity user_winnings) {
         this.id = id;
         this.title = title;
         this.description = desc;
@@ -40,11 +40,20 @@ public class CarEntity {
         this.email = email;
         this.currentBid = currentBid;
         this.bought = bought;
+        this.data = data;
     }
 
     public CarEntity() {
     }
 
+
+    public byte[] getData() {
+        return data;
+    }
+
+    public void setData(byte[] data) {
+        this.data = data;
+    }
 
     public UserEntity getUser_winnings() {
         return user_winnings;

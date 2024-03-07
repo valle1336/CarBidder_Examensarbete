@@ -19,4 +19,5 @@ public class CarEntityDetailsService {
     public CarEntity findById(Long id) {
         return carRepository.findById(id).orElse(null);
     }
+
 }
