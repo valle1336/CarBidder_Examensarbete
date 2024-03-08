@@ -84,61 +84,93 @@ public class CarController {
 
     @PostMapping("/buy-car")
     public String buyOutCar(
-            @RequestParam("carId") Long carId,
-            Authentication authentication) {
+            @RequestParam("carId") Long carId) {
+
+
 
         CarEntity car = carRepository.findById(carId).orElse(null);
         if (car == null) {
             return "error-page";
         }
 
-        UserEntity user = userRepository.findByUsername(authentication.getName());
-        if (user == null) {
-            return "error-page";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        int userPoints = user.getPoints();
-        int buyOutPrice = car.getBuyOutPrice();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserEntity) {
+            // Få tag på den inloggade användarens id
+            Long userId = ((UserEntity) authentication.getPrincipal()).getId();
 
-        if(userPoints > buyOutPrice) {
-            user.setPoints(userPoints - buyOutPrice);
-            car.setBought(true);
-            car.setUser_winnings(user);
-            carRepository.save(car);
-        } else {
-            return "notEnoughBalance";
+
+            UserEntity user = userRepository.findById(userId).orElse(null);
+
+            if (user == null) {
+                return "error-page";
+            }
+
+
+            int userPoints = user.getPoints();
+            int buyOutPrice = car.getBuyOutPrice();
+
+            if (user.getId() != car.getUser().getId()) {
+                if (userPoints > buyOutPrice) {
+                    user.setPoints(userPoints - buyOutPrice);
+                    car.setBought(true);
+                    car.setUser_winnings(user);
+                    carRepository.save(car);
+                } else {
+                    return "notEnoughBalance";
+                }
+            } else {
+                return "ownCar";
+            }
+
         }
         return "redirect:/";
     }
 
     @GetMapping("/")
-    public String showAllCarsOnHomePage(CarEntity carEntity, Model model, Authentication authentication) {
+    public String showAllCarsOnHomePage(CarEntity carEntity, Model model) {
         List<CarEntity> cars = carRepository.findAll();
         model.addAttribute("cars", cars);
 
-        UserEntity user = userRepository.findByUsername(authentication.getName());
-        if (user == null) {
-            return "home";
-        }
-        model.addAttribute("userEntity", user);
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserEntity) {
+            // Få tag på den inloggade användarens id
+            Long userId = ((UserEntity) authentication.getPrincipal()).getId();
+
+            UserEntity user = userRepository.findById(userId).orElse(null);
+
+            if (user == null) {
+                return "home";
+            }
+            model.addAttribute("userEntity", user);
+
+
+        }
         return "home";
     }
 
     @GetMapping("/viewCar/{id}")
-    public String getDynamicCarView(@PathVariable("id") Long id, Model model, Authentication authentication) {
+    public String getDynamicCarView(@PathVariable("id") Long id, Model model) {
         CarEntity car = carService.findById(id);
         if (car == null) {
             return "error-page";
         }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        UserEntity user = userRepository.findByUsername(authentication.getName());
-        if (user == null) {
-            return "error-page";
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserEntity) {
+            // Få tag på den inloggade användarens id
+            Long userId = ((UserEntity) authentication.getPrincipal()).getId();
+
+            UserEntity user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                return "error-page";
+            }
+
+            model.addAttribute("userEntity", user);
+            model.addAttribute("carEntity", car);
+
         }
-
-        model.addAttribute("userEntity", user);
-        model.addAttribute("carEntity", car);
         return "viewCar";
     }
 
@@ -231,8 +263,7 @@ public class CarController {
     @PostMapping("/place-bet")
     public String placeBetOnCar(
             @RequestParam("carId") Long carId,
-            @RequestParam("currentBid") int userBetOnCar,
-            Authentication authentication) {
+            @RequestParam("currentBid") int userBetOnCar) {
 
         // Hämta CarEntity
         CarEntity car = carRepository.findById(carId).orElse(null);
@@ -240,22 +271,31 @@ public class CarController {
             return "error-page";
         }
 
-        // Hämta inloggad användare
-        UserEntity user = userRepository.findByUsername(authentication.getName());
-        if (user == null) {
-            return "error-page";
-        }
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-        int userPoints = user.getPoints();
-        int currentCarBid = car.getCurrentBid();
-        int buyOutPriceOnCar = car.getBuyOutPrice();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserEntity) {
+            // Få tag på den inloggade användarens id
+            Long userId = ((UserEntity) authentication.getPrincipal()).getId();
 
-        if(userPoints < userBetOnCar || userBetOnCar < currentCarBid) {
-            return "notEnoughBalance";
-        } else if (userPoints > currentCarBid) {
-            user.setPoints(userPoints - userBetOnCar);
-            car.setCurrentBid(userBetOnCar);
-            carRepository.save(car);
+            UserEntity user = userRepository.findById(userId).orElse(null);
+            if (user == null) {
+                return "error-page";
+            }
+
+            int userPoints = user.getPoints();
+            int currentCarBid = car.getCurrentBid();
+
+            if (user.getId() != car.getUser().getId()) {
+                if (userPoints < userBetOnCar || userBetOnCar < currentCarBid) {
+                    return "notEnoughBalance";
+                } else if (userPoints > currentCarBid) {
+                    user.setPoints(userPoints - userBetOnCar);
+                    car.setCurrentBid(userBetOnCar);
+                    carRepository.save(car);
+                }
+            } else {
+                return "ownCar";
+            }
         }
 
         return "redirect:/";

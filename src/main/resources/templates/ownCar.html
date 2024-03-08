@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Error</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+  <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
+  <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+</div>
+
+<div class="flex justify-center">
+  <div class="flex flex-col">
+    <h1 class="font-bold text-xl">You cannot bid or buy out your own car!</h1>
+
+  </div>
+</div>
+
+</body>
+</html>
