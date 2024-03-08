@@ -11,17 +11,22 @@
     <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
-<h1>My Cars Page</h1>
-<div th:each="myCars : ${userCars}">
-    <h1 th:text="*{myCars.title}"></h1>
+<div th:each="myCars : ${userCars}" class="flex justify-center mt-4">
+    <div class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6">
+    <h1 th:text="*{myCars.title}" class="font-bold text-2xl pb-2"></h1>
     <p th:text="*{myCars.description}"></p>
-    <p th:text="*{myCars.startingBid}"></p>
-    <p th:text="*{myCars.buyOutPrice}"></p>
-    <p th:text="*{myCars.email}"></p>
+        <label for="current" class="pt-2">Current Bid:</label>
+        <p th:text="*{'$' + myCars.currentBid}" id="current"></p>
+
+        <label for="buyOut" class="pt-2">Buy out price:</label>
+        <p th:text="*{'$' + myCars.buyOutPrice}" id="buyOut"></p>
+
+    <p th:text="*{myCars.email}" class="pt-2"></p>
 
     <a th:href="@{/editMyCar(carId=${myCars.id})}">Edit</a>
 
     <a th:href="@{/deleteCar/{id}(id=${myCars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
+    </div>
 
 </div>
 </body>
