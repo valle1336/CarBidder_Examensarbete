@@ -7,6 +7,8 @@ import com.alex.carbider.CarBider.entities.cars.CarEntityDetailsService;
 import com.alex.carbider.CarBider.entities.cars.CarRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -17,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class CarController {
@@ -127,6 +130,8 @@ public class CarController {
         return "redirect:/";
     }
 
+
+
     @GetMapping("/")
     public String showAllCarsOnHomePage(CarEntity carEntity, Model model) {
         List<CarEntity> cars = carRepository.findAll();
@@ -144,7 +149,6 @@ public class CarController {
                 return "home";
             }
             model.addAttribute("userEntity", user);
-
 
         }
         return "home";
@@ -172,6 +176,19 @@ public class CarController {
 
         }
         return "viewCar";
+    }
+
+    @GetMapping("/image/{id}")
+    public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
+        Optional<CarEntity> optionalImage = carRepository.findById(id);
+
+        if (optionalImage.isPresent()) {
+            CarEntity carEntity = optionalImage.get();
+            return ResponseEntity.ok().contentType(MediaType.IMAGE_JPEG).body(carEntity.getImage());
+        } else {
+            // Hantera om bilden inte finns
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/myProfile/{id}")
@@ -307,7 +324,7 @@ public class CarController {
             @PathVariable Long id
     ) {
         carRepository.deleteById(id);
-        return "redirect:/myCars";
+        return "redirect:/";
     }
 
 }
