@@ -13,6 +13,7 @@ public class CarEntity {
     private String title;
     private String description;
     private int startingBid;
+    private int currentBid;
     private int buyOutPrice;
 
     private String email;
@@ -21,7 +22,7 @@ public class CarEntity {
     @JoinColumn(name = "users_id")
     private UserEntity user;
 
-    public CarEntity(long id, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
+    public CarEntity(long id, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
         this.id = id;
         this.title = title;
         this.description = desc;
@@ -29,9 +30,18 @@ public class CarEntity {
         this.buyOutPrice = buyOutPrice;
         this.user = user;
         this.email = email;
+        this.currentBid = currentBid;
     }
 
     public CarEntity() {
+    }
+
+    public int getCurrentBid() {
+        return currentBid;
+    }
+
+    public void setCurrentBid(int currentBid) {
+        this.currentBid = currentBid;
     }
 
     public String getEmail() {
