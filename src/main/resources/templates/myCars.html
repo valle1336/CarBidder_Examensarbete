@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Cars Page!</title>
+</head>
+<body>
+<h1>My Cars Page</h1>
+<div th:each="myCars : ${userCars}">
+    <h1 th:text="*{myCars.title}"></h1>
+    <p th:text="*{myCars.description}"></p>
+    <p th:text="*{myCars.startingBid}"></p>
+    <p th:text="*{myCars.buyOutPrice}"></p>
+    <p th:text="*{myCars.email}"></p>
+
+    <a th:href="@{/editMyCar(carId=${myCars.id})}">Edit</a>
+
+    <a th:href="@{/deleteCar/{id}(id=${myCars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
+
+</div>
+</body>
+</html>

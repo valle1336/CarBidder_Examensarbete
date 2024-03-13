@@ -1,10 +1,13 @@
 package com.alex.carbider.CarBider.entities.user;
 
+import com.alex.carbider.CarBider.entities.user.cars.CarEntity;
 import jakarta.persistence.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class UserEntity implements UserDetails {
@@ -13,6 +16,8 @@ public class UserEntity implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<CarEntity> carsList;
 
     private String username;
     private String password;
@@ -28,13 +33,22 @@ public class UserEntity implements UserDetails {
 
 
 
-    public UserEntity(String username,  String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
+    public UserEntity(String username, List<CarEntity> carsList, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
         this.accountNonLocked = accountNonLocked;
         this.accountEnabled = accountEnabled;
         this.credentialsNonExpired = credentialsNonExpired;
+        this.carsList = carsList;
+    }
+
+    public List<CarEntity> getCarsList() {
+        return carsList;
+    }
+
+    public void setCarsList(List<CarEntity> carsList) {
+        this.carsList = carsList;
     }
 
     @Override
