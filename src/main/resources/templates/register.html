@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Register Account</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+<h1>Register Account!</h1>
+
+<form method="post" th:action="@{/register}" th:object="${userEntity}">
+
+  <label for="username">Username</label>
+  <input type="text" th:field="*{username}" id="username" placeholder="username...">
+
+  <br>
+  <br>
+  <input type="password" th:field="*{password}" placeholder="password..." id="password">
+
+  <button type="submit">Register</button>
+
+
+</form>
+</body>
+</html>
