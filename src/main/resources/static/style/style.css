@@ -1,3 +1,5 @@
 .wallpaper {
     background-image: url('../static/images/bmw.jpg');
+    background-size: cover;
+    background-attachment: fixed;
 }

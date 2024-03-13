@@ -7,12 +7,13 @@
     <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
 <body class="bg-black">
+<div class="wallpaper">
 <div class="flex justify-center mt-4 mb-10">
 <a class="font-bold text-4xl pr-2 text-white">Car Bidder</a>
     <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
-<div class="wallpaper">
+
 <div th:each="cars : ${cars}" class="flex flex-col items-center mt-4">
 
     <a class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-2/4 py-6" th:href="@{/viewCar/{id}(id=${cars.id})}">
@@ -43,7 +44,7 @@
 </div>
 
 
-  </div>
+
   <div class="flex flex-row justify-center mt-8 ">
   <a th:href="@{/createAd}" class="bg-green-500 font-bold text-4xl px-4 pb-2 rounded-full mb-10">+</a>
   </div>
@@ -59,6 +60,7 @@
       </a>
       </div>
   </div>
+</div>
 
 
   </body>
