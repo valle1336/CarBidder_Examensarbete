@@ -243,7 +243,7 @@ public class CarController {
         model.addAttribute("carId", carId);
         model.addAttribute("carTitle", car.getTitle());
         model.addAttribute("carDescription", car.getDescription());
-        model.addAttribute("carStartingBid", car.getStartingBid());
+        model.addAttribute("carCurrentBid", car.getCurrentBid());
         model.addAttribute("carEmail", car.getEmail());
         model.addAttribute("carBuyOutPrice", car.getBuyOutPrice());
 
@@ -256,7 +256,7 @@ public class CarController {
             @RequestParam("title") String title,
             @RequestParam("description") String description,
             @RequestParam("email") String email,
-            @RequestParam("startingBid") int startingBid,
+            @RequestParam("currentBid") int currentBid,
             @RequestParam("buyOutPrice") int buyOutPrice)
 
 
@@ -270,7 +270,7 @@ public class CarController {
         car.setTitle(title);
         car.setDescription(description);
         car.setEmail(email);
-        car.setStartingBid(startingBid);
+        car.setCurrentBid(currentBid);
         car.setBuyOutPrice(buyOutPrice);
         carRepository.save(car);
 

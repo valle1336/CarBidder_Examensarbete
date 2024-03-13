@@ -4,11 +4,12 @@
     <meta charset="UTF-8">
     <title>My Profile Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
-<body class="bg-sky-200">
+<body class="bg-black">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
-    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+    <a class="font-bold text-4xl pr-2 text-white" th:href="@{/}">Car Bidder</a>
+    <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
     <div th:object="${userEntity}" class="flex justify-center">
 
@@ -29,9 +30,9 @@
         </div>
     </div>
 <div class="flex justify-center pt-6">
-    <a th:href="@{/logout}" class="bg-red-400 px-4 py-2 rounded-lg border-2 border-slate-400 mr-4">Sign out!</a>
-    <a th:href="@{/myWinnings}" class="bg-indigo-300 px-4 py-2 rounded-lg border-2 border-slate-400 mr-4">My Winnings!</a>
-    <a th:href="@{/myCars}" class="bg-blue-400 px-4 py-2 rounded-lg border-2 border-slate-400">My Cars!</a>
+    <a th:href="@{/logout}" class="bg-white px-4 py-2 rounded-lg border-2 border-slate-400 mr-4">Sign out!</a>
+    <a th:href="@{/myWinnings}" class="bg-white px-4 py-2 rounded-lg border-2 border-slate-400 mr-4">My Winnings!</a>
+    <a th:href="@{/myCars}" class="bg-white px-4 py-2 rounded-lg border-2 border-slate-400">My Cars!</a>
 
 </div>
 

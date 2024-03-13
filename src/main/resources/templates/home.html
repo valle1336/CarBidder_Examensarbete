@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <title>Home Page</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
-<body class="bg-sky-200">
+<body class="bg-black">
 <div class="flex justify-center mt-4 mb-10">
-<a class="font-bold text-4xl pr-2">Car Bidder</a>
-    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+<a class="font-bold text-4xl pr-2 text-white">Car Bidder</a>
+    <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
+<div class="wallpaper">
 <div th:each="cars : ${cars}" class="flex flex-col items-center mt-4">
 
-    <a class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6" th:href="@{/viewCar/{id}(id=${cars.id})}">
+    <a class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-2/4 py-6" th:href="@{/viewCar/{id}(id=${cars.id})}">
 
         <!--  <img th:src="@{/images/{imageName}(imageName=${cars.image})}" alt="Car image could not be loaded :("> "Request header is too large" -->
 
@@ -35,11 +37,10 @@
       </a>
 
           <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}" class="mt-2">
-              <a th:href="@{/editMyCar(carId=${cars.id})}">Edit</a>
-              <a th:href="@{/deleteCar/{id}(id=${cars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
+              <a th:href="@{/editMyCar(carId=${cars.id})}" class="text-red-600">Edit</a>
+              <a th:href="@{/deleteCar/{id}(id=${cars.id})}"  class="text-red-600" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
           </div>
-
-
+</div>
 
 
   </div>
@@ -52,9 +53,9 @@
   <div th:if="${#authentication.principal != null}" class="fixed top-0 right-0 p-4">
       <div th:object="${userEntity}" class="flex justify-center">
       <a class="flex flex-col" th:href="@{/myProfile/{id}(id=${userEntity.id})}">
-          <img src="../static/images/user.png" alt="This image could not be loaded :(" width="40px" height="40px" >
-          <p  th:text="*{username}"></p>
-      <p th:text="*{'$' + points}"></p>
+          <img src="../static/images/user-icon.png" alt="This image could not be loaded :(" width="40px" height="40px" >
+          <p  th:text="*{username}" class="text-white"></p>
+      <p th:text="*{'$' + points}" class="text-white"></p>
       </a>
       </div>
   </div>

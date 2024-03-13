@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <title>Not Enough :(</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
-<body class="bg-sky-200">
+<body class="bg-black">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
-    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+    <a class="font-bold text-4xl pr-2 text-white" th:href="@{/}">Car Bidder</a>
+    <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
-<div class="flex justify-center">
+<div class="flex justify-center text-white">
     <div class="flex flex-col">
 <h1 class="font-bold text-xl">Sorry either the bet you're trying to place is to small or you have insufficient balance :(</h1>
     </div>

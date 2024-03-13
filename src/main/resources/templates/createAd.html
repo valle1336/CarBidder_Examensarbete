@@ -4,16 +4,17 @@
     <meta charset="UTF-8">
     <title>Create an Ad!</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
-<body class="bg-sky-200">
+<body class="bg-black">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
-    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+    <a class="font-bold text-4xl pr-2 text-white" th:href="@{/}">Car Bidder</a>
+    <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
 <h1>Create an Ad!</h1>
 
-<form th:action="@{/createAd}" method="post" th:object="${carEntity}" enctype="multipart/form-data">
+<form th:action="@{/createAd}" method="post" th:object="${carEntity}" enctype="multipart/form-data" class="text-white">
   <label for="title">Title</label>
   <input type="text" placeholder="title..." id="title" th:field="*{Title}">
 

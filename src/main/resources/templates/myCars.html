@@ -4,15 +4,16 @@
     <meta charset="UTF-8">
     <title>My Cars Page!</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" th:href="@{/style/style.css}" type="text/css">
 </head>
-<body class="bg-sky-200">
+<body class="bg-black">
 <div class="flex justify-center mt-4 mb-10">
-    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bidder</a>
-    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+    <a class="font-bold text-4xl pr-2 text-white" th:href="@{/}">Car Bidder</a>
+    <img src="../static/images/car-icon.png" alt="This image could not be loaded :(" width="45px" height="45px">
 </div>
 
 <div th:each="myCars : ${userCars}" class="flex justify-center mt-4">
-    <div class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-3/4 py-6">
+    <div class="flex flex-col items-center bg-slate-200 border-2 border-slate-500 rounded-lg w-2/4 py-6">
     <h1 th:text="*{myCars.title}" class="font-bold text-2xl pb-2"></h1>
     <p th:text="*{myCars.description}"></p>
         <label for="current" class="pt-2">Current Bid:</label>

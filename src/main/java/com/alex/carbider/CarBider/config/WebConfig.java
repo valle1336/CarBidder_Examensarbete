@@ -7,7 +7,6 @@ import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 @Configuration  // Låter Spring hitta denna config
-@EnableWebMvc
 public class WebConfig implements WebMvcConfigurer {
 
     @Override
@@ -20,7 +19,7 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/resources/**", "/static/**").
+        registry.addResourceHandler("/resources/**", "/static/**", "/static/style/**").
                 addResourceLocations("/resources/", "classpath:/static/");
     }
 }
