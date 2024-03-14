@@ -6,11 +6,21 @@
 </head>
 <body>
 <div th:object="${carEntity}">
-    <h1 th:text="*{title}"></h1>
-    <p th:text="*{description}"></p>
-    <p th:text="*{startingBid}"></p>
-    <p th:text="*{buyOutPrice}"></p>
-    <p th:text="*{email}"></p>
+    
+    <label for="title">Title:</label>
+    <h1 th:text="*{title}" id="title"></h1>
+
+    <label for="desc">Description:</label>
+    <p th:text="*{description}" id="desc"></p>
+
+    <label for="bid">Starting bid:</label>
+    <p th:text="*{startingBid}" id="bid"></p>
+
+    <label for="buyOut">Buy out price:</label>
+    <p th:text="*{buyOutPrice}" id="buyOut"></p>
+
+    <label for="email">Email:</label>
+    <p th:text="*{email}" id="email"></p>
 
 
     <a th:href="'mailto:' + *{email}">Contact Seller!</a>
