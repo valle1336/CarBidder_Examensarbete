@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Profile Page</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+    <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bider</a>
+    <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+</div>
+    <div th:object="${userEntity}" class="flex justify-center">
+
+        <div class="flex flex-col bg-slate-200 items-center py-4 w-2/4 border-2 border-slate-500 rounded-lg">
+        <img src="../static/images/user.png" alt="This image could not be loaded :(" width="45px" height="45px">
+
+        <h1 th:text="*{username}" class="font-bold text-xl"></h1>
+            <p class="pt-2" th:text="*{role.name()}"></p>
+        <p th:text="*{'$' + points}"></p>
+            <label for="nonExpired" class="pt-2">Account Non Expired:</label>
+        <p th:text="*{accountNonExpired}" id="nonExpired"></p>
+
+            <label for="nonLocked" class="pt-2">Account Non Locked:</label>
+        <p th:text="*{accountNonLocked}" id="nonLocked"></p>
+
+            <label for="creNonExpired" class="pt-2">Credentials Non Expired:</label>
+        <p th:text="*{credentialsNonExpired}" id="creNonExpired"></p>
+        </div>
+
+    </div>
+
+
+</body>
+</html>

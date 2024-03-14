@@ -3,8 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>Edit your Car!</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-sky-200">
+<div class="flex justify-center mt-4 mb-10">
+  <a th:href="@{/}" class="font-bold text-4xl pr-2">Car Bider</a>
+  <img src="../static/images/sport-car.png" alt="This image could not be loaded :(" width="45px" height="45px">
+</div>
 
 <form th:action="@{/save-edit-car}" method="post">
   <input type="hidden" th:name="carId" th:value="${carId}">

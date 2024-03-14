@@ -2,6 +2,7 @@ package com.alex.carbider.CarBider.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -15,5 +16,11 @@ public class WebConfig implements WebMvcConfigurer {
         registry.addViewController("/view").setViewName("viewProduct");
         registry.addViewController("/register").setViewName("register");
 
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/resources/**", "/static/**").
+                addResourceLocations("/resources/", "classpath:/static/");
     }
 }

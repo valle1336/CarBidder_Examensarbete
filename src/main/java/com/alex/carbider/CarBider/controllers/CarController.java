@@ -58,22 +58,45 @@ public class CarController {
     }
 
     @GetMapping("/")
-    public String showAllCarsOnHomePage(CarEntity carEntity, Model model) {
+    public String showAllCarsOnHomePage(CarEntity carEntity, Model model, Authentication authentication) {
         List<CarEntity> cars = carRepository.findAll();
         model.addAttribute("cars", cars);
+
+        UserEntity user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "home";
+        }
+        model.addAttribute("userEntity", user);
 
         return "home";
     }
 
     @GetMapping("/viewCar/{id}")
-    public String getDynamicCarView(@PathVariable("id") Long id, Model model) {
+    public String getDynamicCarView(@PathVariable("id") Long id, Model model, Authentication authentication) {
         CarEntity car = carService.findById(id);
-
         if (car == null) {
-            return "redirect:/error";
+            return "error-page";
         }
+
+        UserEntity user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userEntity", user);
         model.addAttribute("carEntity", car);
         return "viewCar";
+    }
+
+    @GetMapping("/myProfile/{id}")
+    public String getUserByIdOnMyProfilePage(@PathVariable("id") Long id, Model model) {
+        UserEntity user = userRepository.findById(id).orElse(null);
+        if (user == null) {
+            return "error-page";
+        }
+
+        model.addAttribute("userEntity", user);
+        return "myProfile";
     }
 
     @GetMapping("/myCars")
@@ -159,7 +182,9 @@ public class CarController {
         int currentCarBid = car.getCurrentBid();
         int buyOutPriceOnCar = car.getBuyOutPrice();
 
-        if (userPoints > currentCarBid) {
+        if(userPoints < currentBid) {
+            return "notEnoughBalance";
+        } else if (userPoints > currentCarBid) {
             user.setPoints(userPoints - currentBid);
             car.setCurrentBid(currentBid);
             carRepository.save(car);
@@ -167,11 +192,7 @@ public class CarController {
             return "notEnoughBalance";
         }
 
-        if(userPoints < buyOutPriceOnCar) {
-            return "notEnoughBalance";
-        } else {
-            user.setPoints(buyOutPriceOnCar);
-        }
+
 
 
         return "redirect:/";
