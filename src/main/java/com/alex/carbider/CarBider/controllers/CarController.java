@@ -50,7 +50,8 @@ public class CarController {
         if(result.hasErrors()) {
             return "createAd";
         }
-
+        int start = carEntity.getStartingBid();
+        carEntity.setCurrentBid(start);
         carRepository.save(carEntity);
 
         return "redirect:/";
@@ -143,7 +144,6 @@ public class CarController {
 
 
     {
-
         CarEntity car = carRepository.findById(carId).orElse(null);
         if (car == null) {
             return "error-page";
