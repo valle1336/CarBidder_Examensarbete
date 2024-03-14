@@ -140,17 +140,39 @@ public class CarController {
     @PostMapping("/place-bet")
     public String placeBetOnCar(
             @RequestParam("carId") Long carId,
-            @RequestParam("currentBid") int currentBid)
+            @RequestParam("currentBid") int currentBid,
+            Authentication authentication) {
 
-
-    {
+        // Hämta CarEntity
         CarEntity car = carRepository.findById(carId).orElse(null);
         if (car == null) {
             return "error-page";
         }
 
-        car.setCurrentBid(currentBid);
-        carRepository.save(car);
+        // Hämta inloggad användare
+        UserEntity user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "error-page";
+        }
+
+        int userPoints = user.getPoints();
+        int currentCarBid = car.getCurrentBid();
+        int buyOutPriceOnCar = car.getBuyOutPrice();
+
+        if (userPoints > currentCarBid) {
+            user.setPoints(userPoints - currentCarBid);
+            car.setCurrentBid(currentBid);
+            carRepository.save(car);
+        } else {
+            return "notEnoughBalance";
+        }
+
+        if(userPoints < buyOutPriceOnCar) {
+            return "error-page";
+        } else {
+            user.setPoints(buyOutPriceOnCar);
+        }
+
 
         return "redirect:/";
     }
