@@ -15,6 +15,7 @@ public class CarEntity {
     private int startingBid;
     private int currentBid;
     private int buyOutPrice;
+    private boolean bought;
 
     private String email;
 
@@ -22,7 +23,7 @@ public class CarEntity {
     @JoinColumn(name = "users_id")
     private UserEntity user;
 
-    public CarEntity(long id, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
+    public CarEntity(long id, boolean bought, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
         this.id = id;
         this.title = title;
         this.description = desc;
@@ -31,9 +32,18 @@ public class CarEntity {
         this.user = user;
         this.email = email;
         this.currentBid = currentBid;
+        this.bought = bought;
     }
 
     public CarEntity() {
+    }
+
+    public boolean isBought() {
+        return bought;
+    }
+
+    public void setBought(boolean bought) {
+        this.bought = bought;
     }
 
     public int getCurrentBid() {

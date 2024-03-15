@@ -58,6 +58,7 @@ public class CarController {
 
         int start = carEntity.getStartingBid();
         carEntity.setCurrentBid(start);
+        carEntity.setBought(false);
         carRepository.save(carEntity);
 
         return "redirect:/";
@@ -196,8 +197,34 @@ public class CarController {
             carRepository.save(car);
         }
 
+        return "redirect:/";
+    }
 
+    @PostMapping("/buy-car")
+    public String buyOutCar(
+            @RequestParam("carId") Long carId,
+            Authentication authentication) {
 
+        CarEntity car = carRepository.findById(carId).orElse(null);
+        if (car == null) {
+            return "error-page";
+        }
+
+        UserEntity user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "error-page";
+        }
+
+        int userPoints = user.getPoints();
+        int buyOutPrice = car.getBuyOutPrice();
+
+        if(userPoints > buyOutPrice) {
+            user.setPoints(userPoints - buyOutPrice);
+            car.setBought(true);
+            carRepository.save(car);
+        } else {
+            return "notEnoughBalance";
+        }
         return "redirect:/";
     }
 

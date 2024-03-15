@@ -46,7 +46,15 @@
 
         <button type="submit">Place bet!</button>
         <br>
+    </form>
 
+    <form th:action="@{/buy-car}" method="post">
+        <input type="hidden" th:name="carId" th:value="*{id}">
+
+        <label for="buy">Buy out price:</label>
+        <p th:text="*{'$' + buyOutPrice}" id="buy"></p>
+
+        <button type="submit">Buy out car!</button>
 
     </form>
 
