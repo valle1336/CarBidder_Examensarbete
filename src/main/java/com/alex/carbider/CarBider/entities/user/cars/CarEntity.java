@@ -23,19 +23,32 @@ public class CarEntity {
     @JoinColumn(name = "users_id")
     private UserEntity user;
 
-    public CarEntity(long id, boolean bought, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user) {
+    @ManyToOne()
+    @JoinColumn(name = "users_id_winnings")
+    private UserEntity user_winnings;
+
+    public CarEntity(long id, boolean bought, int currentBid, String email, String title, String desc, int startingBid, int buyOutPrice, UserEntity user, UserEntity user_winnings) {
         this.id = id;
         this.title = title;
         this.description = desc;
         this.startingBid = startingBid;
         this.buyOutPrice = buyOutPrice;
         this.user = user;
+        this.user_winnings = user_winnings;
         this.email = email;
         this.currentBid = currentBid;
         this.bought = bought;
     }
 
     public CarEntity() {
+    }
+
+    public UserEntity getUser_winnings() {
+        return user_winnings;
+    }
+
+    public void setUser_winnings(UserEntity user_winnings) {
+        this.user_winnings = user_winnings;
     }
 
     public boolean isBought() {

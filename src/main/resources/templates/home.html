@@ -29,10 +29,11 @@
             <h1 class="font-bold text-3xl text-red-600">SOLD!</h1>
         </div>
 
-        <p th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
-        <a th:href="@{/editMyCar(carId=${cars.id})}">Edit</a>
-        <a th:href="@{/deleteCar/{id}(id=${cars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
-        </p>
+        <div th:if="${#authorization.expression('hasRole(''ADMIN'')')}">
+            <a th:href="@{/editMyCar(carId=${cars.id})}">Edit</a>
+            <a th:href="@{/deleteCar/{id}(id=${cars.id})}" onclick="return confirm('Är du säker på att du vill ta bort den här bilen?')">Delete</a>
+        </div>
+
     </a>
 
 

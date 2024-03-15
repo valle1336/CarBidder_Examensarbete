@@ -20,6 +20,9 @@ public class UserEntity implements UserDetails {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<CarEntity> carsList;
 
+    @OneToMany(mappedBy = "user_winnings", cascade = CascadeType.ALL)
+    private List<CarEntity> carsWinningList;
+
     @Size(min = 1, max = 64, message = "Username cannot be empty or more than 64 characters!")
     private String username;
     @Size(min = 4, max = 64, message = "Password cannot be weaker than 4 or more than 64 characters!")
@@ -40,7 +43,7 @@ public class UserEntity implements UserDetails {
 
 
 
-    public UserEntity(String username, Roles roles, List<CarEntity> carsList, int points, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
+    public UserEntity(String username, List<CarEntity> carsWinningList, Roles roles, List<CarEntity> carsList, int points, String password, boolean accountNonExpired, boolean accountNonLocked, boolean accountEnabled, boolean credentialsNonExpired) {
         this.username = username;
         this.password = password;
         this.accountNonExpired = accountNonExpired;
@@ -48,11 +51,19 @@ public class UserEntity implements UserDetails {
         this.accountEnabled = accountEnabled;
         this.credentialsNonExpired = credentialsNonExpired;
         this.carsList = carsList;
+        this.carsWinningList = carsWinningList;
         this.points = points;
         this.role = roles;
     }
 
 
+    public List<CarEntity> getCarsWinningList() {
+        return carsWinningList;
+    }
+
+    public void setCarsWinningList(List<CarEntity> carsWinningList) {
+        this.carsWinningList = carsWinningList;
+    }
 
     public Roles getRole() {
         return role;

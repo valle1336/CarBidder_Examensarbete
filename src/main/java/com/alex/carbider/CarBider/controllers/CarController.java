@@ -64,6 +64,35 @@ public class CarController {
         return "redirect:/";
     }
 
+    @PostMapping("/buy-car")
+    public String buyOutCar(
+            @RequestParam("carId") Long carId,
+            Authentication authentication) {
+
+        CarEntity car = carRepository.findById(carId).orElse(null);
+        if (car == null) {
+            return "error-page";
+        }
+
+        UserEntity user = userRepository.findByUsername(authentication.getName());
+        if (user == null) {
+            return "error-page";
+        }
+
+        int userPoints = user.getPoints();
+        int buyOutPrice = car.getBuyOutPrice();
+
+        if(userPoints > buyOutPrice) {
+            user.setPoints(userPoints - buyOutPrice);
+            car.setBought(true);
+            car.setUser_winnings(user);
+            carRepository.save(car);
+        } else {
+            return "notEnoughBalance";
+        }
+        return "redirect:/";
+    }
+
     @GetMapping("/")
     public String showAllCarsOnHomePage(CarEntity carEntity, Model model, Authentication authentication) {
         List<CarEntity> cars = carRepository.findAll();
@@ -118,6 +147,20 @@ public class CarController {
 
         return "myCars";
     }
+
+    @GetMapping("/myWinnings")
+    public String showMyWinnings(CarEntity carEntity, Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        UserEntity currentUser = userRepository.findUserByUsername(username);
+        List<CarEntity> userCars = currentUser.getCarsWinningList();
+
+
+        model.addAttribute("userCars", userCars);
+
+        return "myWinnings";
+    }
+
 
     @GetMapping("/editMyCar")
     public String showEditCarPage(
@@ -200,33 +243,6 @@ public class CarController {
         return "redirect:/";
     }
 
-    @PostMapping("/buy-car")
-    public String buyOutCar(
-            @RequestParam("carId") Long carId,
-            Authentication authentication) {
-
-        CarEntity car = carRepository.findById(carId).orElse(null);
-        if (car == null) {
-            return "error-page";
-        }
-
-        UserEntity user = userRepository.findByUsername(authentication.getName());
-        if (user == null) {
-            return "error-page";
-        }
-
-        int userPoints = user.getPoints();
-        int buyOutPrice = car.getBuyOutPrice();
-
-        if(userPoints > buyOutPrice) {
-            user.setPoints(userPoints - buyOutPrice);
-            car.setBought(true);
-            carRepository.save(car);
-        } else {
-            return "notEnoughBalance";
-        }
-        return "redirect:/";
-    }
 
     @GetMapping("/deleteCar/{id}")
     public String deleteCar(
